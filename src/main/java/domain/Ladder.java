@@ -5,23 +5,36 @@ import java.util.List;
 
 public class Ladder {
 
-  private static final BooleanGenerator booleanGenerator = new RandomBooleanGenerator();
-
   private final List<Line> lines;
 
-  public Ladder(final int width, final int height) {
+  private Ladder(final int width, final int height, final BooleanGenerator booleanGenerator) {
     validateWidth(width);
     validateHeight(height);
 
     this.lines = new ArrayList<>();
-
     for (int i = 0; i < height; i++) {
       lines.add(new Line(width, booleanGenerator));
     }
   }
 
-  public List<Line> getLines() {
+  public static Ladder of(final int width, final int height) {
+    return new Ladder(width, height, new RandomBooleanGenerator());
+  }
+
+  static Ladder testOf(final int width, final int height, final BooleanGenerator generator) {
+    return new Ladder(width, height, generator);
+  }
+
+  public List<Line> lines() {
     return lines;
+  }
+
+  public int width() {
+    return lines().get(0).size() + 1;
+  }
+
+  public int height() {
+    return lines.size();
   }
 
   private void validateWidth(int width) {

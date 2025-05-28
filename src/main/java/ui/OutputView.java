@@ -2,6 +2,8 @@ package ui;
 
 import domain.Ladder;
 import domain.Line;
+import domain.LadderResult;
+import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -16,12 +18,18 @@ public class OutputView {
   public static void printLadder(final Ladder ladder) {
     final StringBuilder ladderBuilder = new StringBuilder();
 
-    for (Line line : ladder.getLines()) {
+    for (Line line : ladder.lines()) {
       final String lineString = printSingleLine(line);
       ladderBuilder.append(lineString);
     }
 
     System.out.print(ladderBuilder);
+  }
+
+  public static void printLadderResult(LadderResult result) {
+    for (Entry<Integer, Integer> entry : result.results().entrySet()) {
+      System.out.println(entry.getKey() + "->" + entry.getValue());
+    }
   }
 
   private static String printSingleLine(final Line line) {

@@ -1,6 +1,8 @@
 package controller;
 
 import domain.Ladder;
+import domain.LadderGame;
+import domain.LadderResult;
 import ui.InputView;
 import ui.OutputView;
 
@@ -10,12 +12,13 @@ public class LadderController {
     final int width = InputView.inputLadderWidth();
     final int height = InputView.outputLadderHeight();
 
-    final Ladder ladder = createLadder(width, height);
+    final Ladder ladder = Ladder.of(width, height);
 
     OutputView.printLadder(ladder);
-  }
 
-  private Ladder createLadder(final int width, final int height) {
-    return new Ladder(width, height);
+    final LadderGame game = new LadderGame(ladder);
+    final LadderResult result = game.run();
+
+    OutputView.printLadderResult(result);
   }
 }
