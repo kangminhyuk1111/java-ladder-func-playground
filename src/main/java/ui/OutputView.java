@@ -27,25 +27,16 @@ public class OutputView {
     printRewards(rewards);
   }
 
-  public static void printResults(Players players, Rewards rewards, LadderResult results) {
+  public static void printResults(LadderResult results) {
     while (true) {
-      final String target = InputView.inputResultTarget();
+      final String targetPlayerInput = InputView.inputResultTarget();
 
-      if (target.equals(ALL)) {
-        OutputView.printAllResults(players, rewards, results);
+      if (targetPlayerInput.equals(ALL)) {
+        OutputView.printAllResults(results);
         break;
       }
 
-      final Player player = new Player(target);
-      final int playerIndex = players.findPlayerIndexByName(player);
-
-      if (playerIndex == -1) {
-        System.out.println("존재하지 않는 플레이어입니다.");
-        continue;
-      }
-
-      final int resultIndex = results.getResult(playerIndex);
-      final String reward = rewards.getReward(resultIndex);
+      final String reward = results.getReward(targetPlayerInput);
 
       OutputView.printReward(reward);
     }
@@ -56,12 +47,12 @@ public class OutputView {
     System.out.println(reward);
   }
 
-  private static void printAllResults(Players players, Rewards rewards, LadderResult results) {
+  private static void printAllResults(LadderResult results) {
     System.out.println("실행 결과");
-    for (int i = 0; i < players.players().size(); i++) {
-      Player player = players.players().get(i);
+    for (int i = 0; i < results.players().size(); i++) {
+      Player player = results.players().players().get(i);
       int resultIndex = results.getResult(i);
-      String reward = rewards.getReward(resultIndex);
+      String reward = results.rewards().getReward(resultIndex);
       System.out.println(player.name() + " : " + reward);
     }
   }
